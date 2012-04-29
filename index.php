@@ -39,8 +39,7 @@ if (!$_SERVER['QUERY_STRING']) {
 		#Go through the full results and split the entries into two arrays; files and directories
 		foreach($results as $i => $result) {
 			if(is_dir($workingdir.$result)) {
-				$directories[$i]['name'] = $result;
-				$directories[$i]['path'] = $request.$result;
+
 				
 				#Find the latest added picture to use as a thumbnail for the folder
 				$lastMod = 0;
@@ -53,8 +52,17 @@ if (!$_SERVER['QUERY_STRING']) {
 					}
 				}
 				
-				$directories[$i]['thumb'] = $lastModFile;
-				$directories[$i]['thumb_path'] = $request.$result.'/'.$lastModFile;
+				$directories[$i]['name'] 		= $result;
+				$directories[$i]['path'] 		= $request.$result;
+				
+				if(!$lastModFile) {
+					$directories[$i]['thumb'] 		= 'No Thumb';
+					$directories[$i]['thumb_path']	= $home.'/includes/folder.png';
+				}
+				else {
+					$directories[$i]['thumb'] 		= $lastModFile;
+					$directories[$i]['thumb_path']	= $request.$result.'/'.$lastModFile;
+				}
 				
 			}
 			else {
@@ -69,12 +77,27 @@ if (!$_SERVER['QUERY_STRING']) {
 		#	}
 		#}
 
+		#Create the nav breadcrumbs
+		$breadcrumb = null;
+		if($request != $home && $request != $home.'/') {
+			$breadcrumbs = array_diff(explode('/',$request), array(str_replace('/','',$home)));
+			$breadcrumbs = array_filter($breadcrumbs, 'strlen');
+			
+			foreach($breadcrumbs as $i => $crumb) {
+				$breadcrumb[$i]['name'] = $crumb;
+				$breadcrumb[$i]['path'] = 'fuckall';
+			}
+		}
+		
 		
 		#Load specific template
 		$TBS->LoadTemplate('templates/main.htm');
 		
 		#Specify some page specific variables
 		$page_title = '';
+	
+		if (is_null($breadcrumb)) $breadcrumb = array();
+		$TBS->MergeBlock('bread', $breadcrumb);
 		
 		if (is_null($directories)) $directories = array();
 		$TBS->MergeBlock('dirs', $directories);
