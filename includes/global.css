@@ -1,11 +1,12 @@
 @charset "utf-8";
 /* CSS Document */
 
-body { 
+html, body { 
 	background: #ECECED; 
+	height: 100%;
 }
 
-div.wrapper {
+div.Content {
 	width: 80%;
 	margin: 0 auto;
 	
@@ -45,4 +46,51 @@ h2 {
 	padding:0 0 5px 0;
 	color:#fff;
 	font:120% helvetica, arial, sans-serif;
+}
+
+.Header
+{
+    height: 100px;
+	width: 80%;
+	margin: 0 auto;
+	
+	padding: 8px;
+	-webkit-box-shadow: 0px 0px 15px #000;
+	-moz-box-shadow: 0px 0px 15px #000;
+	box-shadow: 0px 0px 15px #000;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #FFF;
+	margin-bottom: 30px;
+	overflow: hidden;
+}
+
+.ContentWrap
+{
+    min-height: 97%; 
+    height: auto !important; /*Cause footer to stick to bottom in IE 6*/
+    height: 97%; 
+    margin: 0 auto -100px; /*Allow for footer height*/
+    vertical-align:bottom;
+}
+.Push
+{
+	height: 100px; /*Push must be same height as Footer */
+}
+
+.Footer 
+{
+    height: 75px; /*Push must be same height as Footer */
+	width: 80%;
+	margin: 0 auto;
+	
+	padding: 8px;
+	-webkit-box-shadow: 0px 0px 15px #000;
+	-moz-box-shadow: 0px 0px 15px #000;
+	box-shadow: 0px 0px 15px #000;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #FFF;
+	margin-bottom: 30px;
+	overflow: hidden;
 }

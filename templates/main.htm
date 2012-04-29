@@ -1,9 +1,9 @@
 [onload;file=templates/header.htm]
-	
+		<div class="Content">
 			<div class="directories">
 				<div class="album">
-					<a href="[onshow.request][dirs.val;block=div;bmagnet=(div)]" title="View the photos in [dirs.val]" class="photoborders"><img src="/gallery/images/" width="100" height="100" alt="[dirs.val]" /></a>
-					<h2><a href="[onshow.request][dirs.val]" title="View the photos in [dirs.val]">[dirs.val]</a></h2>
+					<a href="[dirs.path;block=div;bmagnet=(div)]" title="View the photos in [dirs.name]" class="photoborders"><img src="[dirs.thumb_path]" width="100" height="100" alt="" /></a>
+					<h2><a href="[dirs.path]" title="View the photos in [dirs.name]">[dirs.name]</a></h2>
 				</div>
 			</div>
 			
@@ -11,5 +11,5 @@
 			<div class="pictures">
 				<img src="[onshow.request][files.val;block=img;bmagnet=div]" alt="[files.val]" width="100" height="100"/>
 			</div>
-			
+		</div>
 [onload;file=templates/footer.htm]

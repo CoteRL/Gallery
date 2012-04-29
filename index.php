@@ -25,6 +25,7 @@ if (!$_SERVER['QUERY_STRING']) {
 	$request = urldecode(preg_replace('/\?.*/','',$_SERVER['REQUEST_URI']));
 	
 	$workingdir = $fullpath.$request;
+	$blankthumb = $home.'/includes/folder.png';
 	
 	#Only do the stuff if the directory actually exists
 	if(file_exists($workingdir)) {
@@ -36,9 +37,25 @@ if (!$_SERVER['QUERY_STRING']) {
 		$files = null;
 		
 		#Go through the full results and split the entries into two arrays; files and directories
-		foreach($results as $result) {
+		foreach($results as $i => $result) {
 			if(is_dir($workingdir.$result)) {
-				$directories[] = $result;
+				$directories[$i]['name'] = $result;
+				$directories[$i]['path'] = $request.$result;
+				
+				#Find the latest added picture to use as a thumbnail for the folder
+				$lastMod = 0;
+				$lastModFile = '';
+				$scan = $fullpath.$request.$result.'/';
+				foreach (scandir($scan) as $entry) {
+					if (is_file($scan.$entry) && filectime($scan.$entry) > $lastMod) {
+						$lastMod = filectime($scan.$entry);
+						$lastModFile = $entry;
+					}
+				}
+				
+				$directories[$i]['thumb'] = $lastModFile;
+				$directories[$i]['thumb_path'] = $request.$result.'/'.$lastModFile;
+				
 			}
 			else {
 				$files[] = $result;
@@ -51,6 +68,7 @@ if (!$_SERVER['QUERY_STRING']) {
 		#		
 		#	}
 		#}
+
 		
 		#Load specific template
 		$TBS->LoadTemplate('templates/main.htm');
