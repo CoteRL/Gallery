@@ -30,7 +30,7 @@ if (!$_SERVER['QUERY_STRING']) {
 	if(file_exists($workingdir)) {
 		#Scan the directory for all files and directories but remove server configuration files and some other unwanted entries
 		#probably a better way to do this but i'm stupid
-		$results = array_diff(scandir($workingdir), array('..', '.','.htaccess','index.php','includes','templates'));
+		$results = array_diff(scandir($workingdir), array('..', '.','.htaccess','index.php','includes','templates','README.md','.git'));
 
 		$directories = null;
 		$files = null;
@@ -45,14 +45,14 @@ if (!$_SERVER['QUERY_STRING']) {
 			}
 		}
 		
+		#Output to template
 		$TBS->LoadTemplate('templates/main.htm');
-		if($directories) $TBS->MergeBlock('dirs', $directories);
-		if($files) $TBS->MergeBlock('files', $files);
+		if (is_null($directories)) $directories = array();
+		if (is_null($files)) $files = array();
+		$TBS->MergeBlock('dirs', $directories);
+		$TBS->MergeBlock('files', $files);
 		$TBS->Show();
 		
-/* 		print_r($directories);
-		echo "<br />";
-		print_r($files); */
 		
 	}
 	else {

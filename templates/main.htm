@@ -4,9 +4,12 @@
 	</head>
 	
 	<body>
-		<h2><a href="/gallery/[dirs.val;block=a]" title="View the photos in [dirs.val;block=a]">[dirs.val;block=a]</a></h2>
-		<br />
-		<hr>
-		<a href="[onshow.request]/[files.val;block=a]" title="[files.val;block=a]"><img src="[onshow.request]/[files.val;block=a]" width="100" height="100" alt="[files.val;block=a]" /></a>
+		<div id="directories">
+			<h2><a href="/gallery/[dirs.val;block=h2;bmagnet=div]">[dirs.val]</a></h2>
+		</div>
+		
 
+		<div id="pictures">
+			<img src="[onshow.request][files.val;block=img;bmagnet=div]" alt="[files.val]" width="100" height="100"/>
+		</div>
 	</body>
