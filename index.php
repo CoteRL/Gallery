@@ -88,7 +88,7 @@ if (!$_SERVER['QUERY_STRING']) {
 				#$new_req = str_replace($match[0],'',$request);
 				
 				$breadcrumb[$i]['name'] = $crumb;
-				$breadcrumb[$i]['path'] = str_replace($match[0],'',$request);
+				$breadcrumb[$i]['path'] = str_replace($match[0],'',$request).$crumb;
 			}
 		}
 		
