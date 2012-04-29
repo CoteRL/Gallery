@@ -84,8 +84,11 @@ if (!$_SERVER['QUERY_STRING']) {
 			$breadcrumbs = array_filter($breadcrumbs, 'strlen');
 			
 			foreach($breadcrumbs as $i => $crumb) {
+				preg_match("/$crumb.*/",$request,$match);
+				#$new_req = str_replace($match[0],'',$request);
+				
 				$breadcrumb[$i]['name'] = $crumb;
-				$breadcrumb[$i]['path'] = 'fuckall';
+				$breadcrumb[$i]['path'] = str_replace($match[0],'',$request);
 			}
 		}
 		
