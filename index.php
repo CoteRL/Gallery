@@ -45,18 +45,38 @@ if (!$_SERVER['QUERY_STRING']) {
 			}
 		}
 		
-		#Output to template
+		#GO THROUGH FILES AND ONLY GRAB SUPPORTED FILE TYPES
+		#if(!empty($files)){
+		#	foreach($files as $file) {
+		#		
+		#	}
+		#}
+		
+		#Load specific template
 		$TBS->LoadTemplate('templates/main.htm');
+		
+		#Specify some page specific variables
+		$page_title = '';
+		
 		if (is_null($directories)) $directories = array();
-		if (is_null($files)) $files = array();
 		$TBS->MergeBlock('dirs', $directories);
+		
+		if (is_null($files)) $files = array();
 		$TBS->MergeBlock('files', $files);
+		
 		$TBS->Show();
 		
 		
 	}
 	else {
-		echo "Directory doesn't exist";
+		#Load specific template
+		$TBS->LoadTemplate('templates/error.htm');
+		
+		#Specify some page specific variables
+		$page_title = 'Oops!';
+		$error = 'Sorry, that directory does not exist!';
+		
+		$TBS->Show();
 	}
 }
 #If there IS a query then parse it
