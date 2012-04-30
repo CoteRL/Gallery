@@ -24,44 +24,44 @@ if (!$_SERVER['QUERY_STRING']) {
 	##/test/Hello%20World/?v=1 to '/test/Hello World/
 	$request = urldecode(preg_replace('/\?.*/','',$_SERVER['REQUEST_URI']));
 	
-	$workingdir = $fullpath.$request;
-	$blankthumb = $home.'/includes/folder.png';
+	$working_dir = $FULL_PATH.$request;
+	$blank_thumb = $HOME.'/includes/folder.png';
 	
 	#Only do the stuff if the directory actually exists
-	if(file_exists($workingdir)) {
+	if(file_exists($working_dir)) {
 		#Scan the directory for all files and directories but remove server configuration files and some other unwanted entries
 		#probably a better way to do this but i'm stupid
-		$results = array_diff(scandir($workingdir), array('..', '.','.htaccess','index.php','includes','templates','README.md','.git'));
+		$results = array_diff(scandir($working_dir), $IGNORE);
 
 		$directories = null;
 		$files = null;
 		
 		#Go through the full results and split the entries into two arrays; files and directories
 		foreach($results as $i => $result) {
-			if(is_dir($workingdir.$result)) {
+			if(is_dir($working_dir.$result)) {
 
 				
 				#Find the latest added picture to use as a thumbnail for the folder
-				$lastMod = 0;
-				$lastModFile = '';
-				$scan = $fullpath.$request.$result.'/';
+				$last_mod = 0;
+				$last_mod_file = '';
+				$scan = $FULL_PATH.$request.$result.'/';
 				foreach (scandir($scan) as $entry) {
-					if (is_file($scan.$entry) && filectime($scan.$entry) > $lastMod) {
-						$lastMod = filectime($scan.$entry);
-						$lastModFile = $entry;
+					if (is_file($scan.$entry) && filectime($scan.$entry) > $last_mod) {
+						$last_mod = filectime($scan.$entry);
+						$last_mod_file = $entry;
 					}
 				}
 				
 				$directories[$i]['name'] 		= $result;
 				$directories[$i]['path'] 		= $request.$result;
 				
-				if(!$lastModFile) {
+				if(!$last_mod_file) {
 					$directories[$i]['thumb'] 		= 'No Thumb';
-					$directories[$i]['thumb_path']	= $home.'/includes/folder.png';
+					$directories[$i]['thumb_path']	= $HOME.'/includes/folder.png';
 				}
 				else {
-					$directories[$i]['thumb'] 		= $lastModFile;
-					$directories[$i]['thumb_path']	= $request.$result.'/'.$lastModFile;
+					$directories[$i]['thumb'] 		= $last_mod_file;
+					$directories[$i]['thumb_path']	= $request.$result.'/'.$last_mod_file;
 				}
 				
 			}
@@ -78,20 +78,20 @@ if (!$_SERVER['QUERY_STRING']) {
 		#}
 
 		#Create the nav breadcrumbs
-		$breadcrumb = null;
-		if($request != $home && $request != $home.'/') {
-			#Create array of all the breadcrumbs
-			$breadcrumbs = array_diff(explode('/',$request), array(str_replace('/','',$home)));
+		$bread_crumb = null;
+		if($request != $HOME && $request != $HOME.'/') {
+			#Create array of all the bread_crumbs
+			$bread_crumbs = array_diff(explode('/',$request), array(str_replace('/','',$HOME)));
 			#Remove any empty entries before the first / and after the last
-			$breadcrumbs = array_filter($breadcrumbs, 'strlen');
+			$bread_crumbs = array_filter($bread_crumbs, 'strlen');
 			
-			foreach($breadcrumbs as $i => $crumb) {
+			foreach($bread_crumbs as $i => $crumb) {
 				#Find the current crumb in the full request uri to generate a link for it
 				##Fix the regex so it matches after the word instead of including the word, then remove .$crumb from the end of the next line... tard
 				preg_match("/$crumb.*/",$request,$match);
-				$breadcrumb[$i]['path'] = str_replace($match[0],'',$request).$crumb;
+				$bread_crumb[$i]['path'] = str_replace($match[0],'',$request).$crumb;
 				
-				$breadcrumb[$i]['name'] = $crumb;
+				$bread_crumb[$i]['name'] = $crumb;
 
 			}
 		}
@@ -103,8 +103,8 @@ if (!$_SERVER['QUERY_STRING']) {
 		#Specify some page specific variables
 		$page_title = '';
 	
-		if (is_null($breadcrumb)) $breadcrumb = array();
-		$TBS->MergeBlock('bread', $breadcrumb);
+		if (is_null($bread_crumb)) $bread_crumb = array();
+		$TBS->MergeBlock('bread', $bread_crumb);
 		
 		if (is_null($directories)) $directories = array();
 		$TBS->MergeBlock('dirs', $directories);
