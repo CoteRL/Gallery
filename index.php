@@ -80,19 +80,35 @@ if (!$_SERVER['QUERY_STRING']) {
 		#Create the nav breadcrumbs
 		$bread_crumb = null;
 		if($request != $HOME && $request != $HOME.'/') {
-			#Create array of all the bread_crumbs
-			$bread_crumbs = array_diff(explode('/',$request), array(str_replace('/','',$HOME)));
-			#Remove any empty entries before the first / and after the last
-			$bread_crumbs = array_filter($bread_crumbs, 'strlen');
+			##Create array of all the bread_crumbs
+			#$bread_crumbs = array_diff(explode('/',$request), array(str_replace('/','',$HOME)));
+			##Remove any empty entries before the first / and after the last
+			#$bread_crumbs = array_filter($bread_crumbs, 'strlen');
 			
-			foreach($bread_crumbs as $i => $crumb) {
+			#foreach($bread_crumbs as $i => $crumb) {
 				#Find the current crumb in the full request uri to generate a link for it
 				##Fix the regex so it matches after the word instead of including the word, then remove .$crumb from the end of the next line... tard
-				preg_match("/$crumb.*/",$request,$match);
-				$bread_crumb[$i]['path'] = str_replace($match[0],'',$request).$crumb;
-				
-				$bread_crumb[$i]['name'] = $crumb;
-
+			#	preg_match("/$crumb.*/",$request,$match);
+			#	$bread_crumb[$i]['path'] = str_replace($match[0],'',$request).$crumb;
+			#	
+			#	$bread_crumb[$i]['name'] = $crumb;
+			#
+			#}
+			
+			$home2 = str_replace('/','',$HOME);
+			if( preg_match_all(';/([^/]*);', $request, $regs) ) {
+				for($i=0; $i<count($regs[0]); $i++) {
+					if($regs[1][$i] != $home2 && $regs[1][$i] != '') {
+						$name = $regs[1][$i];
+						$href = '';
+						
+						for($j=0; $j<$i+1; $j++) {
+							$href .= $regs[0][$j];
+						}
+						$bread_crumb[$i]['path'] = $href;
+						$bread_crumb[$i]['name'] = $name;
+					}
+				}
 			}
 		}
 		
