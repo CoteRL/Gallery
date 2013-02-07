@@ -2,22 +2,18 @@
 	<head>
 		<title>[onshow.MAIN_TITLE]:[onshow.page_title]</title>
 		<link rel="stylesheet" type="text/css" href="[onshow.HOME]/includes/global.css" />
-		
-		<script type="text/javascript">
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', '[onshow.ANALYTIC_ACCOUNT;magnet=script]']);
-			_gaq.push(['_setDomainName', '[onshow.ANALYTIC_DOMAIN;magnet=script]']);
-			_gaq.push(['_trackPageview']);
-
-			(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
-		</script>
 	</head>
 	
 	<body>
 		<div class="ContentWrap">
 			<div class="Header">
+			<div class="breadcrumbs">
+				<a href="[onshow.HOME]">Main Album </a> / <a href="[bread.path;block=a+b]"> [bread.name] </a><b>/</b>
+			</div>
+			<div class="directories">
+				<div class="album">
+					<a href="[dirs.path;block=div;bmagnet=(div)]" class="photoborders" title="View the photos in [dirs.name]" ><img class="dir_thumb" src="[dirs.thumb_path]" alt="[dirs.name]" /></a>
+					<a href="[dirs.path]" title="View the photos in [dirs.name]">[dirs.name]</a>
+				</div>
+			</div>
 			</div>

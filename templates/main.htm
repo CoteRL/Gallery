@@ -1,18 +1,64 @@
-[onload;file=templates/header.htm]
-		<div class="Content">
+<html>
+	<head>
+		<title>[onshow.MAIN_TITLE]:[onshow.page_title]</title>
+		<link rel="stylesheet" type="text/css" href="[onshow.HOME]/includes/global.css" />
+		
+		<!-- Add jQuery library -->
+		<script type="text/javascript" src="[onshow.HOME]/fancybox/source/jquery-latest.min.js"></script>
+
+		<!-- Add mousewheel plugin (this is optional) -->
+		<script type="text/javascript" src="[onshow.HOME]/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+		<!-- Add fancyBox -->
+		<link rel="stylesheet" href="[onshow.HOME]/fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />
+		<script type="text/javascript" src="[onshow.HOME]/fancybox/source/jquery.fancybox.pack.js?v=2.1.4"></script>
+		
+		<!-- Optionally add helpers - button, thumbnail and/or media -->
+		<link rel="stylesheet" href="[onshow.HOME]/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+		<script type="text/javascript" src="[onshow.HOME]/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+		<script type="text/javascript" src="[onshow.HOME]/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.5"></script>
+
+		<link rel="stylesheet" href="[onshow.HOME]/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+		<script type="text/javascript" src="[onshow.HOME]/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".fancybox").fancybox();
+			});
+		</script>
+	</head>
+	
+	<body>
+		<div class="ContentWrap">
+			<div class="Header">
 			<div class="breadcrumbs">
 				<a href="[onshow.HOME]">Main Album </a> / <a href="[bread.path;block=a+b]"> [bread.name] </a><b>/</b>
 			</div>
 			<div class="directories">
 				<div class="album">
-					<a href="[dirs.path;block=div;bmagnet=(div)]" title="View the photos in [dirs.name]" ><img src="[dirs.thumb_path]" width="100" height="100" alt="" /></a>
+					<a href="[dirs.path;block=div;bmagnet=(div)]" class="photoborders" title="View the photos in [dirs.name]" ><img class="dir_thumb" src="[dirs.thumb]" alt="[dirs.name]" /></a>
 					<a href="[dirs.path]" title="View the photos in [dirs.name]">[dirs.name]</a>
 				</div>
 			</div>
+			</div>
+		<div class="Content">
 			
-
+			
 			<div class="pictures">
-				<img src="[onshow.request][files.val;block=img;bmagnet=div]" alt="[files.val]" width="100" height="100"/>
+					<a class="fancybox" rel="group" href="[images.path]"><img src="[images.thumb;block=a;bmagnet=(div)]" alt="[images.name]" /></a>
+			</div>
+			
+			
+		</div>
+		<div class="Push"></div>
+		</div>
+		<div class="Footer">
+			<div class="videos">
+					<div class="video"><img class="pic_thumb" src="[onshow.request][videos.name;block=div;bmagnet=(div)]" alt="[videos.name]" /></div>
+			</div>
+			<div class="pagination">
+					<a href="[onshow.request]?page=[pagination.val;block=a;bmagnet=(div)]">[pagination.val]</a>
 			</div>
 		</div>
-[onload;file=templates/footer.htm]
+	</body>
+</html>
