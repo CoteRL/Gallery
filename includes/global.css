@@ -32,6 +32,35 @@ div.Content {
 	text-align: center; 
 }
 
+.dir_thumb {
+	max-width: 100px;
+	max-height: 100px;
+	width: expression(this.width > 100 ? "100px" : true);
+	height: expression(this.height > 100 ? "100px" : true);
+}
+
+.pic_thumb {
+	display: table-cell;
+	vertical-align: middle;
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 100px;
+	max-height: 100px;
+	width: expression(this.width > 100 ? "100px" : true);
+	height: expression(this.height > 100 ? "100px" : true);
+}
+
+.picture {
+	display: block;
+	vertical-align: middle;
+	float:left;
+	height: 100px;
+	width: 100px;
+	margin:0;
+	padding:5px;
+	background-color:#FFF;
+}
+
 .photoborders {
 	float:left;
 	margin:0;
@@ -51,7 +80,6 @@ h2 {
 
 .Header
 {
-    height: 100px;
 	width: 80%;
 	margin: 0 auto;
 	
